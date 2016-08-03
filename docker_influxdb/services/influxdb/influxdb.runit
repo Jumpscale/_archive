@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+chown -R influxdb /data/influxdb
+exec /sbin/setuser influxdb /opt/influxdb/influxd -config /etc/influxdb/influxdb.conf

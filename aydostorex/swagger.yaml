@@ -1,0 +1,93 @@
+swagger: '2.0'
+info:
+  title: AYDO Stor X API
+  description: Golang based extremely easy filestore
+  version: 0.0.1
+schemes:
+  - https
+basePath: /
+produces:
+  - application/json
+paths:
+  /{namespace}/{hash}:
+    get:
+      description: Download file
+      parameters:
+        - name: hash
+          in: path
+          description: md5 hash of the file
+          required: true
+          type: string
+        - name: namespace
+          in: path
+          description: namespace where the file is located
+          required: true
+          type: string
+      responses:
+        '200':
+          description: return the content of the file
+          schema:
+            type: file
+        '404':
+          description: file with this hash not found in this namespace
+    head:
+      description: Test if a file exists
+      parameters:
+        - name: hash
+          in: path
+          description: md5 hash of the file
+          required: true
+          type: string
+        - name: namespace
+          in: path
+          description: namespace where the file is located
+          required: true
+          type: string
+      responses:
+        '200':
+          description: File found
+        '404':
+          description: File not found
+    delete:
+      description: delete file from the store
+      parameters:
+        - name: hash
+          in: path
+          description: md5 hash of the file
+          required: true
+          type: string
+        - name: namespace
+          in: path
+          description: namespace where the file is located
+          required: true
+          type: string
+      responses:
+        '200':
+          description: file deleted
+        '404':
+          description: file with this hash not found in this namespace
+  /{namespace}:
+    post:
+      description: upload a file to the store
+      parameters:
+        - name: namespace
+          in: path
+          description: namespace where to put the file
+          required: true
+          type: string
+      responses:
+        '201':
+          description: hash of the file
+          schema:
+            type: string
+    get:
+      description: download sorted list of file present in a namespace
+      parameters:
+        - name: namespace
+          in: path
+          description: namespace where to put the file
+          required: true
+          type: string
+      responses:
+        '200':
+          description: "sorted list of all hashes & sizes & creation dates. format  is 'hash|size|epoch'"

@@ -1,0 +1,5 @@
+#!/bin/sh
+set -e
+chown -R grafana /data/grafana
+
+exec /sbin/setuser grafana /usr/sbin/grafana-server --homepath=/usr/share/grafana --config=/etc/grafana/grafana.ini cfg:default.paths.data=/data/grafana cfg:default.paths.logs=/var/log/grafana

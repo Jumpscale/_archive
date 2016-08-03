@@ -1,0 +1,4 @@
+#!/bin/sh
+set -e
+chown -R mongodb /data/db
+exec /sbin/setuser mongodb mongod

@@ -1,0 +1,61 @@
+[main]
+redis_host =  "127.0.0.1:6379"
+redis_password = ""
+
+#Default http
+[[listen]]
+  Address = ":8966"
+
+#Example for https with multiple virtual hosts and clientcertificates
+#[[listen]]
+#  Address = ":8443"
+#  [[listen.tls]]
+#    cert = "/path/to/domain1_certificate.cert"
+#    key = "/path/to/domain1_keyfile.key"
+#  [[listen.tls]]
+#    cert = "/path/to/domain2_certificate.cert"
+#    key = "/path/to/domain2_keyfile.key"
+#  [[listen.clientCA]]
+#    cert = "/path/to/CAcert1.cert"
+#  [[listen.clientCA]]
+#    cert = "/path/to/CAcert2.cert"
+
+[influxdb]
+host = "127.0.0.1:8086"
+db   = "main"
+user = "root"
+password = "root"
+
+
+[events]
+enabled = true
+module = "handlers"
+python_path = "./extensions:/opt/jumpscale7/lib"
+    [events.settings]
+    syncthing_url = "http://localhost:18384/"
+    redis_address = "localhost"
+    redis_port = "9999"
+    redis_password = ""
+
+[processor]
+enabled = true
+module = "processor"
+python_path = "./extensions:/opt/jumpscale7/lib"
+
+[jumpscripts]
+enabled = true
+module = "jumpscript"
+python_path = "./extensions:/opt/jumpscale7/lib"
+    [jumpscripts.settings]
+    jumpscripts_path = "./jumpscripts"
+
+
+##### The following 2 sections are supportive for syncthing operation
+##### Please don't remove or edit unless you know what you are doing
+##### This will get replace once we implement local transport for hubbble.
+[syncthing]
+port=9066
+
+[[listen]]
+address="127.0.0.1:9066"
+##### END SECTION.
